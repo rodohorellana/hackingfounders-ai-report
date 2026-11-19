@@ -1,0 +1,350 @@
+/**
+ * Hacking Founders (hackingfounders.com) — Extracted Design System & Theme Tokens
+ * Source: https://www.hackingfounders.com (wp-content/themes/haswell-child/style.css + inline styles + brand SVG)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;700;800&family=Quicksand:wght@300;400;500;700;800&display=swap');
+
+:root {
+  /* ==========================================================================
+     1. TYPOGRAPHY TOKENS
+     ========================================================================== */
+  --hf-font-main: 'Quicksand', sans-serif;
+  --hf-font-title: 'Poppins', sans-serif;
+  --hf-font-extra: 'Quicksand', sans-serif;
+  --hf-font-hero: 'Open Sans', sans-serif;
+  --hf-font-accent: 'PT Sans', sans-serif;
+
+  /* Font Sizes & Line Heights */
+  --hf-title-hero-xl: 110px;
+  --hf-title-hero: 100px;
+  --hf-title-section: 54px;
+  --hf-title-section-lh: 73px;
+  --hf-title-h2: 38px;
+  --hf-title-h3: 32px;
+  --hf-text-medium: 24px;
+  --hf-text-medium-lh: 30px;
+  --hf-text-lead: 18px;
+  --hf-text-lead-lh: 23px;
+  --hf-text-default: 16px;
+  --hf-text-default-lh: 36px;
+  --hf-text-small: 14px;
+  --hf-text-xs: 12px;
+
+  /* ==========================================================================
+     2. COLOR PALETTE TOKENS
+     ========================================================================== */
+  /* Core Brand Colors */
+  --hf-navy: #092768;             /* --color-violet-1: Primary dark surface, headers, footer, hero multiply */
+  --hf-navy-rgb: 9, 39, 104;
+  --hf-cyan: #43D7FF;             /* --color-lightblue: Brand wordmark, cyan section bg, links, card hover */
+  --hf-pink: #F06389;             /* --color-grey-1: Brand brain icon, avatars, primary CTA, accents */
+  --hf-magenta: #E20E8E;          /* Benefits h3, flip-card action buttons, secondary pills */
+  --hf-magenta-hover: #D01687;
+
+  /* Interactive & Micro-Accent Colors */
+  --hf-yellow-cta-hover: #F2CD13; /* Contact submit button hover */
+  --hf-lime-checkbox: #96E563;    /* Form checkbox accent-color */
+  --hf-orange-border: #FF7104;    /* Featured image border accent */
+  --hf-purple-accent: #8B3092;    /* Testimonial author text */
+
+  /* Neutrals */
+  --hf-white: #FFFFFF;
+  --hf-black: #000000;
+  --hf-charcoal-header: #303236;
+  --hf-gray-dark: #434447;        /* Form input text */
+  --hf-gray-heading: #4B4E53;     /* Fallback heading/link gray */
+  --hf-gray-body: #646363;        /* Benefits body copy */
+  --hf-gray-muted: #7E8082;       /* Secondary muted text */
+  --hf-gray-light-bg: #EEEEEE;
+
+  /* Gradients */
+  --hf-gradient-episode-overlay: linear-gradient(
+    to bottom,
+    rgba(9, 39, 104, 0.1) 10%,
+    rgba(9, 39, 104, 0.9) 90%
+  );
+
+  /* ==========================================================================
+     3. SPACING, RADIUS & TRANSITIONS
+     ========================================================================== */
+  --hf-section-py-lg: 120px;
+  --hf-section-py-md: 80px;
+  --hf-section-py-mobile: 80px;
+  --hf-container-narrow: 800px;
+  --hf-container-medium: 900px;
+  --hf-container-wide: 1555px;
+
+  --hf-radius-input: 15px;
+  --hf-radius-card: 20px;
+  --hf-radius-pill-sm: 20px;
+  --hf-radius-pill-md: 25px;
+  --hf-radius-pill-lg: 40px;
+  --hf-radius-circle: 200px;
+
+  --hf-transition-fast: 200ms ease;
+  --hf-transition- header: 270ms cubic-bezier(0, 0, 0.58, 1);
+  --hf-transition-smooth: 500ms ease-out;
+  --hf-transition-reveal: 800ms ease;
+}
+
+/* ==========================================================================
+   BASE & TYPOGRAPHY
+   ========================================================================== */
+body.hf-theme {
+  font-family: var(--hf-font-main);
+  font-size: var(--hf-text-default);
+  line-height: var(--hf-text-default-lh);
+  color: var(--hf-black);
+  background-color: var(--hf-white);
+  margin: 0;
+}
+
+.hf-theme h1,
+.hf-theme .hf-h1 {
+  font: 400 var(--hf-title-hero) / 1.2 var(--hf-font-title);
+  margin: 0;
+}
+
+.hf-theme h2.hf-section-title {
+  font-family: var(--hf-font-title);
+  font-size: var(--hf-title-section);
+  font-weight: 400;
+  line-height: var(--hf-title-section-lh);
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+.hf-theme h2.hf-section-title .hf-slash {
+  padding-left: 4px;
+  font-weight: 400;
+}
+
+.hf-theme h3 {
+  font: 400 var(--hf-title-h3) / 1.2 var(--hf-font-main);
+  margin: 0 0 15px 0;
+}
+
+.hf-theme a {
+  color: var(--hf-cyan);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hf-theme blockquote {
+  border-left: 9px solid var(--hf-pink);
+  font-family: var(--hf-font-main);
+  padding-left: 24px;
+  margin: 24px 0;
+}
+
+/* ==========================================================================
+   COLOR UTILITIES & SECTION SURFACES
+   ========================================================================== */
+.hf-bg-navy {
+  background-color: var(--hf-navy);
+  color: var(--hf-white);
+}
+
+.hf-bg-cyan {
+  background-color: var(--hf-cyan);
+  color: var(--hf-white);
+}
+
+.hf-bg-white {
+  background-color: var(--hf-white);
+  color: var(--hf-black);
+}
+
+.hf-text-pink { color: var(--hf-pink) !important; }
+.hf-text-navy { color: var(--hf-navy) !important; }
+.hf-text-cyan { color: var(--hf-cyan) !important; }
+.hf-text-magenta { color: var(--hf-magenta) !important; }
+.hf-text-white { color: var(--hf-white) !important; }
+
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
+
+/* 1. Hacker / Profile Feature Card */
+.hf-feature-card {
+  padding: 2em 1em;
+  text-align: center;
+  color: var(--hf-white);
+}
+
+.hf-feature-card-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 60px auto;
+  width: 200px;
+  height: 200px;
+  background-color: var(--hf-pink);
+  border-radius: var(--hf-radius-circle);
+  padding: 12px;
+  position: relative;
+}
+
+.hf-feature-card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.hf-feature-card-title {
+  color: var(--hf-white);
+  font-size: var(--hf-text-medium);
+  line-height: var(--hf-text-medium-lh);
+  font-weight: 700;
+  padding-bottom: 20px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.hf-feature-card-text {
+  font-size: var(--hf-text-lead);
+  line-height: var(--hf-text-lead-lh);
+  color: var(--hf-white);
+}
+
+/* 2. Benefits List Item ("Why tune in?") */
+.hf-benefit-item h3 {
+  color: var(--hf-magenta);
+  font-family: var(--hf-font-main);
+  font-size: var(--hf-text-medium);
+  font-weight: 700;
+  line-height: var(--hf-text-medium-lh);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.hf-benefit-item p {
+  color: var(--hf-gray-body);
+  font-family: var(--hf-font-main);
+  font-size: var(--hf-text-lead);
+  font-weight: 500;
+  line-height: var(--hf-text-lead-lh);
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+/* 3. Episode Cover Card (Sadie Hover Effect) */
+.hf-episode-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--hf-navy);
+}
+
+.hf-episode-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hf-gradient-episode-overlay);
+  transition: background var(--hf-transition-smooth);
+  z-index: 1;
+}
+
+.hf-episode-card:hover {
+  background: var(--hf-cyan);
+}
+
+.hf-episode-card:hover::before {
+  background: rgba(67, 215, 255, 0.85);
+}
+
+.hf-episode-card-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  color: var(--hf-white);
+  z-index: 2;
+}
+
+/* 4. Buttons */
+.hf-btn-primary {
+  display: inline-block;
+  background-color: var(--hf-pink);
+  color: var(--hf-white);
+  font: 400 20px / 1 var(--hf-font-main);
+  padding: 20px 50px;
+  min-width: 200px;
+  border-radius: var(--hf-radius-pill-md);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--hf-transition-smooth), color var(--hf-transition-smooth);
+}
+
+.hf-btn-primary:hover {
+  background-color: var(--hf-yellow-cta-hover);
+  color: var(--hf-navy);
+}
+
+.hf-btn-magenta {
+  display: inline-block;
+  background-color: var(--hf-magenta);
+  color: var(--hf-white);
+  font: 400 16px / 1.2 var(--hf-font-main);
+  padding: 8px 25px;
+  border-radius: var(--hf-radius-pill-sm);
+  border: none;
+  opacity: 0.9;
+  transition: background-color var(--hf-transition-fast), opacity var(--hf-transition-fast);
+}
+
+.hf-btn-magenta:hover {
+  background-color: var(--hf-magenta-hover);
+  opacity: 1;
+}
+
+.hf-btn-outline {
+  display: inline-block;
+  padding: 15px 30px;
+  border: 1px solid currentColor;
+  color: var(--hf-black);
+  font: 700 18px / 1 var(--hf-font-main);
+  background: transparent;
+  border-radius: var(--hf-radius-pill-lg);
+  transition: all var(--hf-transition-smooth);
+}
+
+.hf-btn-outline:hover {
+  background: var(--hf-black);
+  color: var(--hf-white);
+}
+
+/* 5. Form Controls */
+.hf-input,
+.hf-select,
+.hf-textarea {
+  width: 100%;
+  border-radius: var(--hf-radius-input);
+  background: var(--hf-white);
+  color: var(--hf-gray-dark);
+  font-family: var(--hf-font-main);
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  outline: none;
+  margin-bottom: 25px;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 991px) {
+  .hf-theme h1,
+  .hf-theme .hf-h1 {
+    font-size: 44px;
+  }
+
+  .hf-theme h2.hf-section-title {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+}
