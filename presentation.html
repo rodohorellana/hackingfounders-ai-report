@@ -1583,6 +1583,10 @@
         <button type="button" data-ebook-trigger class="inline-flex items-center gap-1 font-bold text-[#96E563] hover:text-[#43D7FF] underline cursor-pointer transition-colors">
           <span>⬇ Download PDF eBook</span>
         </button>
+        <span class="text-white/40">·</span>
+        <button type="button" id="cookie-settings-trigger" class="text-white/60 hover:text-[#43D7FF] underline cursor-pointer transition-colors">
+          Cookies
+        </button>
       </div>
       <a href="https://agenticdojo.ai" target="_blank" rel="noopener" class="inline-flex items-center gap-3 text-white hover:opacity-90 transition-opacity group" aria-label="Visit Agentic Dojo website">
         <span class="text-[10px] uppercase tracking-[2px] font-bold text-[#F06389]">Sponsored by</span>
@@ -1593,6 +1597,33 @@
       </a>
     </div>
   </footer>
+
+  <!-- ========================================================================= -->
+  <!-- HACKING FOUNDERS: GDPR / ANALYTICS COOKIE CONSENT BANNER                  -->
+  <!-- ========================================================================= -->
+  <aside id="cookie-consent-banner" class="fixed bottom-14 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-[120] bg-[#092768]/95 backdrop-blur-md text-white border-2 border-[#43D7FF] rounded-[20px] p-5 shadow-2xl hidden no-print" role="region" aria-label="Cookie consent">
+    <div class="flex items-start gap-3.5">
+      <div class="w-9 h-9 rounded-full bg-[#43D7FF]/15 border border-[#43D7FF]/40 flex items-center justify-center text-[#43D7FF] shrink-0 mt-0.5">
+        <span class="material-symbols-outlined text-[20px]">cookie</span>
+      </div>
+      <div class="flex-1">
+        <h3 class="hf-font-title text-base font-bold text-white leading-snug mb-1">
+          We value your privacy<span class="slash-divider">/</span>
+        </h3>
+        <p class="text-xs text-white/85 leading-relaxed mb-4">
+          We use cookies and Google Analytics to understand how readers interact with <strong>The Agency AI Edge Report</strong> and to improve your experience. See our <a href="https://www.hackingfounders.com/privacy-policy/" target="_blank" rel="noopener" class="underline text-[#43D7FF] hover:text-[#F2CD13] font-semibold">Privacy Policy</a>.
+        </p>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button type="button" id="cookie-accept-btn" class="px-4 py-2 rounded-full bg-[#F06389] hover:bg-[#96E563] hover:text-[#092768] text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm">
+            Accept All
+          </button>
+          <button type="button" id="cookie-essential-btn" class="px-3.5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white/90 font-semibold text-xs transition-colors cursor-pointer">
+            Essential Only
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <!-- ========================================================================= -->
   <!-- HACKING FOUNDERS: DOWNLOAD PDF EBOOK MODAL (16:9 LANDSCAPE EDITION)       -->
@@ -3101,6 +3132,58 @@
 
           closeEbookModal();
           triggerPdfDownload();
+        });
+      }
+
+      // =====================================================================
+      // HACKING FOUNDERS: COOKIE CONSENT BANNER & GTM CONSENT SYNC
+      // =====================================================================
+      const COOKIE_STORAGE_KEY = 'hf_cookie_consent';
+      const cookieBanner = document.getElementById('cookie-consent-banner');
+      const cookieAcceptBtn = document.getElementById('cookie-accept-btn');
+      const cookieEssentialBtn = document.getElementById('cookie-essential-btn');
+      const cookieSettingsTrigger = document.getElementById('cookie-settings-trigger');
+
+      function applyCookieConsent(choice) {
+        try {
+          localStorage.setItem(COOKIE_STORAGE_KEY, choice);
+        } catch (err) {}
+        if (typeof window.gtag === 'function') {
+          window.gtag('consent', 'update', {
+            analytics_storage: choice === 'accepted' ? 'granted' : 'denied',
+            ad_storage: choice === 'accepted' ? 'granted' : 'denied'
+          });
+        }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'cookie_consent_updated',
+          cookie_consent: choice
+        });
+        if (cookieBanner) {
+          cookieBanner.classList.add('hidden');
+        }
+      }
+
+      try {
+        const existingConsent = localStorage.getItem(COOKIE_STORAGE_KEY);
+        if (!existingConsent) {
+          if (cookieBanner) cookieBanner.classList.remove('hidden');
+        } else {
+          applyCookieConsent(existingConsent);
+        }
+      } catch (err) {
+        if (cookieBanner) cookieBanner.classList.remove('hidden');
+      }
+
+      if (cookieAcceptBtn) {
+        cookieAcceptBtn.addEventListener('click', () => applyCookieConsent('accepted'));
+      }
+      if (cookieEssentialBtn) {
+        cookieEssentialBtn.addEventListener('click', () => applyCookieConsent('essential'));
+      }
+      if (cookieSettingsTrigger) {
+        cookieSettingsTrigger.addEventListener('click', () => {
+          if (cookieBanner) cookieBanner.classList.remove('hidden');
         });
       }
     });
