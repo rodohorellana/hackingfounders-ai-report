@@ -417,6 +417,10 @@
       display: flex !important;
       border-bottom: 1px solid rgba(67, 215, 255, 0.15);
     }
+    body[data-view-mode="scroll"] #deck-nav-controls,
+    body[data-view-mode="scroll"] #mobile-nav-controls {
+      display: none !important;
+    }
 
     /* Gentle spatial entrance only when user has no reduced motion preference */
     @media (prefers-reduced-motion: no-preference) {
@@ -699,15 +703,15 @@
   <!-- ========================================================================
        STICKY HEADER BAR (Hacking Founders #092768 Header)
        ======================================================================== -->
-  <header class="deck-header sticky top-0 z-50 bg-[#092768]/95 backdrop-blur-md border-b border-[#43D7FF]/20 px-4 md:px-8 py-3 no-print">
-    <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-4">
+  <header class="deck-header sticky top-0 z-50 bg-[#092768]/95 backdrop-blur-md border-b border-[#43D7FF]/20 px-3 sm:px-4 md:px-8 py-2 sm:py-3 no-print">
+    <div class="max-w-[1440px] mx-auto flex items-center justify-between gap-2 sm:gap-4">
       <!-- Brand Logo SVG (from hackingfounders-logo-no-bg.svg) + Report Title -->
-      <div class="flex items-center gap-4">
-        <a href="#slide-1" onclick="goToSlide(0); return false;" class="flex items-center gap-3.5 group" aria-label="Go to Cover Slide">
-          <svg class="h-11 w-auto" viewBox="0 0 441 165" role="img" aria-label="Hacking Founders Logo">
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="#slide-1" onclick="goToSlide(0); return false;" class="flex items-center gap-2.5 sm:gap-3.5 group" aria-label="Go to Cover Slide">
+          <svg class="h-7 sm:h-11 w-auto" viewBox="0 0 441 165" role="img" aria-label="Hacking Founders Logo">
             <use href="#hf-brand-logo"></use>
           </svg>
-          <div class="hidden sm:block border-l border-white/20 pl-3.5">
+          <div class="hidden lg:block border-l border-white/20 pl-3.5">
             <span class="block text-[11px] uppercase tracking-[2.5px] text-[#43D7FF] font-bold">
               Hacking Founders Presents <span class="text-[#F06389]">· Sponsored by Agentic Dojo</span>
             </span>
@@ -717,10 +721,10 @@
       </div>
 
       <!-- Slide Selector & Mode Switcher -->
-      <div class="flex items-center gap-2 md:gap-3">
-        <!-- Jump to Slide Select -->
+      <div class="flex items-center gap-1.5 sm:gap-2 md:gap-3 min-w-0">
+        <!-- Jump to Slide Select (Desktop / Tablet only; hidden on mobile in favor of Prev/Next buttons) -->
         <label for="slide-jump" class="sr-only">Jump to slide</label>
-        <select id="slide-jump" onchange="goToSlide(Number(this.value))" class="bg-[#092768] text-white text-xs md:text-sm font-semibold border border-[#43D7FF]/40 rounded-full px-3 py-1.5 focus:outline-none focus:border-[#43D7FF]">
+        <select id="slide-jump" onchange="goToSlide(Number(this.value))" class="hidden md:block bg-[#092768] text-white text-xs md:text-sm font-semibold border border-[#43D7FF]/40 rounded-full px-3 py-1.5 max-w-[210px] lg:max-w-none text-ellipsis focus:outline-none focus:border-[#43D7FF]">
           <option value="0">01 / Cover: The Agency AI Edge</option>
           <option value="1">02 / Intro: Renting vs. Owning</option>
           <option value="2">03 / Ch. 1: Agency 3.0 Pyramid</option>
@@ -734,7 +738,7 @@
         </select>
 
         <!-- Download PDF eBook Button -->
-        <button type="button" data-ebook-trigger class="inline-flex items-center gap-1.5 bg-[#43D7FF] hover:bg-[#96E563] text-[#092768] font-bold text-xs md:text-sm rounded-full px-3.5 py-1.5 transition-all whitespace-nowrap cursor-pointer shadow-sm" title="Download the 10-page 16:9 Landscape PDF eBook">
+        <button type="button" data-ebook-trigger class="inline-flex items-center gap-1.5 bg-[#43D7FF] hover:bg-[#96E563] text-[#092768] font-bold text-xs md:text-sm rounded-full px-3 sm:px-3.5 py-1.5 transition-all whitespace-nowrap cursor-pointer shadow-sm shrink-0" title="Download the 10-page 16:9 Landscape PDF eBook">
           <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
@@ -744,12 +748,12 @@
         </button>
 
         <!-- View Mode Toggle (Slide Deck vs Full Scroll Page) -->
-        <button id="mode-toggle-btn" type="button" onclick="toggleViewMode()" class="hf-magenta-btn text-xs md:text-sm whitespace-nowrap" title="Switch between Slide Deck and Continuous Web Scroll">
-          <span id="mode-toggle-label">Scroll All Slides</span>
+        <button id="mode-toggle-btn" type="button" onclick="toggleViewMode()" class="hf-magenta-btn text-xs md:text-sm whitespace-nowrap !px-2.5 sm:!px-4 !py-1.5 shrink-0" title="Switch between Slide Deck and Continuous Web Scroll">
+          <span id="mode-toggle-label"><span class="hidden sm:inline">Scroll </span>All</span>
         </button>
 
-        <!-- Prev / Next Controls (Deck Mode) -->
-        <div id="deck-nav-controls" class="flex items-center gap-1.5">
+        <!-- Prev / Next Controls (Deck Mode) Header Desktop -->
+        <div id="deck-nav-controls" class="hidden md:flex items-center gap-1.5">
           <button id="prev-btn" type="button" onclick="stepSlide(-1)" class="hf-outline-btn text-white !px-3.5 !py-1.5 text-xs md:text-sm" aria-label="Previous slide">
             ← Prev
           </button>
@@ -763,8 +767,21 @@
       </div>
     </div>
 
+    <!-- Mobile Top Prev / Next Navigation Bar (Always visible on mobile in Deck Mode) -->
+    <div id="mobile-nav-controls" class="flex md:hidden items-center justify-between gap-2 max-w-[1440px] mx-auto mt-2 pt-2 border-t border-white/10">
+      <button id="mobile-prev-btn" type="button" onclick="stepSlide(-1)" class="hf-outline-btn flex-1 text-white !px-3 !py-1.5 text-xs flex items-center justify-center gap-1" aria-label="Previous slide">
+        ← Prev
+      </button>
+      <span id="mobile-slide-counter" class="text-xs font-bold text-[#43D7FF] px-2 tabular-nums shrink-0">
+        01 / 10
+      </span>
+      <button id="mobile-next-btn" type="button" onclick="stepSlide(1)" class="flex-1 bg-[#F06389] hover:bg-[#F2CD13] hover:text-[#092768] disabled:opacity-35 disabled:cursor-not-allowed text-white font-bold rounded-full px-3 py-1.5 text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer" aria-label="Next slide">
+        Next →
+      </button>
+    </div>
+
     <!-- Progress Bar -->
-    <div class="w-full h-1 bg-white/10 mt-2.5 rounded-full overflow-hidden">
+    <div class="w-full h-1 bg-white/10 mt-2 sm:mt-2.5 rounded-full overflow-hidden">
       <div id="slide-progress-bar" class="h-full bg-gradient-to-r from-[#F06389] via-[#E20E8E] to-[#43D7FF] transition-all duration-300" style="width: 10%;"></div>
     </div>
   </header>
@@ -1573,24 +1590,18 @@
   <!-- ========================================================================
        PERSISTENT BOTTOM SPONSOR FOOTER BAR (Stays fixed while pages slide)
        ======================================================================== -->
-  <footer id="deck-footer" class="sticky bottom-0 z-50 w-full border-t border-[#43D7FF]/20 bg-[#092768]/95 backdrop-blur-md text-white/85 px-4 md:px-8 py-3 no-print">
-    <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
-      <div class="flex flex-wrap items-center gap-3">
-        <span id="footer-page-counter" class="font-bold uppercase tracking-wider text-[#43D7FF] tabular-nums">Page 01 / 10</span>
-        <span class="text-white/40">·</span>
-        <span class="text-white/80">Presented by <a href="https://www.hackingfounders.com" target="_blank" rel="noopener" class="font-bold underline text-[#43D7FF] hover:text-[#F2CD13]">Hacking Founders</a></span>
-        <span class="text-white/40">·</span>
-        <button type="button" data-ebook-trigger class="inline-flex items-center gap-1 font-bold text-[#96E563] hover:text-[#43D7FF] underline cursor-pointer transition-colors">
-          <span>⬇ Download PDF eBook</span>
-        </button>
-        <span class="text-white/40">·</span>
-        <button type="button" id="cookie-settings-trigger" class="text-white/60 hover:text-[#43D7FF] underline cursor-pointer transition-colors">
+  <footer id="deck-footer" class="sticky bottom-0 z-50 w-full border-t border-[#43D7FF]/20 bg-[#092768]/95 backdrop-blur-md text-white/85 px-3 sm:px-4 md:px-8 py-2 sm:py-2.5 no-print">
+    <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-4 text-xs">
+      <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+        <span class="text-white/85">Presented by <a href="https://www.hackingfounders.com" target="_blank" rel="noopener" class="font-bold underline text-[#43D7FF] hover:text-[#F2CD13]">Hacking Founders</a></span>
+        <span class="text-white/35" aria-hidden="true">·</span>
+        <button type="button" id="cookie-settings-trigger" class="text-white/65 hover:text-[#43D7FF] underline cursor-pointer transition-colors">
           Cookies
         </button>
       </div>
-      <a href="https://agenticdojo.ai" target="_blank" rel="noopener" class="inline-flex items-center gap-3 text-white hover:opacity-90 transition-opacity group" aria-label="Visit Agentic Dojo website">
+      <a href="https://agenticdojo.ai" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 sm:gap-3 text-white hover:opacity-90 transition-opacity group" aria-label="Visit Agentic Dojo website">
         <span class="text-[10px] uppercase tracking-[2px] font-bold text-[#F06389]">Sponsored by</span>
-        <svg class="h-5 w-auto" viewBox="0 0 298 59" role="img" aria-label="Agentic Dojo Logo">
+        <svg class="h-4 sm:h-5 w-auto" viewBox="0 0 298 59" role="img" aria-label="Agentic Dojo Logo">
           <use href="#agentic-dojo-logo-light"></use>
         </svg>
         <span class="font-bold underline text-[#43D7FF] hover:text-[#F2CD13] text-xs">agenticdojo.ai ↗</span>
@@ -1601,19 +1612,22 @@
   <!-- ========================================================================= -->
   <!-- HACKING FOUNDERS: GDPR / ANALYTICS COOKIE CONSENT BANNER                  -->
   <!-- ========================================================================= -->
-  <aside id="cookie-consent-banner" class="fixed bottom-14 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-[120] bg-[#092768]/95 backdrop-blur-md text-white border-2 border-[#43D7FF] rounded-[20px] p-5 shadow-2xl hidden no-print" role="region" aria-label="Cookie consent">
-    <div class="flex items-start gap-3.5">
-      <div class="w-9 h-9 rounded-full bg-[#43D7FF]/15 border border-[#43D7FF]/40 flex items-center justify-center text-[#43D7FF] shrink-0 mt-0.5">
-        <span class="material-symbols-outlined text-[20px]">cookie</span>
+  <aside id="cookie-consent-banner" class="fixed bottom-[4.5rem] sm:bottom-14 left-3 right-3 sm:left-auto sm:right-6 sm:max-w-md z-[120] bg-[#092768]/95 backdrop-blur-md text-white border-2 border-[#43D7FF] rounded-[20px] p-4 sm:p-5 shadow-2xl hidden no-print" role="region" aria-label="Cookie consent">
+    <button type="button" id="cookie-close-btn" aria-label="Dismiss cookie banner" class="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/10 hover:bg-[#F06389] text-white/80 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+      <span class="material-symbols-outlined text-[16px]">close</span>
+    </button>
+    <div class="flex items-start gap-3 pr-6">
+      <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#43D7FF]/15 border border-[#43D7FF]/40 flex items-center justify-center text-[#43D7FF] shrink-0 mt-0.5">
+        <span class="material-symbols-outlined text-[18px] sm:text-[20px]">cookie</span>
       </div>
       <div class="flex-1">
-        <h3 class="hf-font-title text-base font-bold text-white leading-snug mb-1">
+        <h3 class="hf-font-title text-sm sm:text-base font-bold text-white leading-snug mb-1">
           We value your privacy<span class="slash-divider">/</span>
         </h3>
-        <p class="text-xs text-white/85 leading-relaxed mb-4">
+        <p class="text-[11px] sm:text-xs text-white/85 leading-relaxed mb-3.5 sm:mb-4">
           We use cookies and Google Analytics to understand how readers interact with <strong>The Agency AI Edge Report</strong> and to improve your experience. See our <a href="https://www.hackingfounders.com/terms-and-conditions/" target="_blank" rel="noopener" class="underline text-[#43D7FF] hover:text-[#F2CD13] font-semibold">Terms &amp; Conditions</a>.
         </p>
-        <div class="flex flex-wrap items-center gap-2.5">
+        <div class="flex flex-wrap items-center gap-2">
           <button type="button" id="cookie-accept-btn" class="px-4 py-2 rounded-full bg-[#F06389] hover:bg-[#96E563] hover:text-[#092768] text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm">
             Accept All
           </button>
@@ -2040,19 +2054,23 @@
       currentSlideIndex = targetIndex;
 
       const counter = document.getElementById('slide-counter');
+      const mobileCounter = document.getElementById('mobile-slide-counter');
       const jumpSelect = document.getElementById('slide-jump');
       const prevBtn = document.getElementById('prev-btn');
       const nextBtn = document.getElementById('next-btn');
+      const mobilePrevBtn = document.getElementById('mobile-prev-btn');
+      const mobileNextBtn = document.getElementById('mobile-next-btn');
       const progressBar = document.getElementById('slide-progress-bar');
 
       const formattedCurrent = String(targetIndex + 1).padStart(2, '0');
       const formattedTotal = String(totalSlides).padStart(2, '0');
       if (counter) counter.textContent = `${formattedCurrent} / ${formattedTotal}`;
-      const footerCounter = document.getElementById('footer-page-counter');
-      if (footerCounter) footerCounter.textContent = `Page ${formattedCurrent} / ${formattedTotal}`;
+      if (mobileCounter) mobileCounter.textContent = `${formattedCurrent} / ${formattedTotal}`;
       if (jumpSelect) jumpSelect.value = String(targetIndex);
       if (prevBtn) prevBtn.disabled = targetIndex === 0;
       if (nextBtn) nextBtn.disabled = targetIndex === totalSlides - 1;
+      if (mobilePrevBtn) mobilePrevBtn.disabled = targetIndex === 0;
+      if (mobileNextBtn) mobileNextBtn.disabled = targetIndex === totalSlides - 1;
       if (progressBar) {
         progressBar.style.width = `${((targetIndex + 1) / totalSlides) * 100}%`;
       }
@@ -2092,14 +2110,42 @@
       body.setAttribute('data-view-mode', nextMode);
 
       const label = document.getElementById('mode-toggle-label');
-      const navControls = document.getElementById('deck-nav-controls');
       if (label) {
-        label.textContent = nextMode === 'scroll' ? 'Switch to Slide Deck' : 'Scroll All Slides';
-      }
-      if (navControls) {
-        navControls.style.display = nextMode === 'scroll' ? 'none' : 'flex';
+        label.innerHTML = nextMode === 'scroll'
+          ? '<span class="hidden sm:inline">Slide </span>Deck'
+          : '<span class="hidden sm:inline">Scroll </span>All';
       }
     }
+
+    // Horizontal touch swipe navigation on mobile in Deck Mode
+    (function initTouchSwipe() {
+      const stage = document.getElementById('presentation-stage');
+      if (!stage) return;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      stage.addEventListener('touchstart', (e) => {
+        if (document.body.getAttribute('data-view-mode') !== 'deck') return;
+        if (!e.touches || e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      stage.addEventListener('touchend', (e) => {
+        if (document.body.getAttribute('data-view-mode') !== 'deck') return;
+        if (!e.changedTouches || e.changedTouches.length !== 1) return;
+        const modal = document.getElementById('assessment-modal');
+        const ebookModal = document.getElementById('ebook-modal');
+        if ((modal && !modal.classList.contains('hidden')) || (ebookModal && !ebookModal.classList.contains('hidden'))) return;
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(diffX) > 55 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+          if (diffX < 0) {
+            stepSlide(1);
+          } else {
+            stepSlide(-1);
+          }
+        }
+      }, { passive: true });
+    })();
 
     document.addEventListener('keydown', (e) => {
       const modal = document.getElementById('assessment-modal');
@@ -3142,6 +3188,7 @@
       const cookieBanner = document.getElementById('cookie-consent-banner');
       const cookieAcceptBtn = document.getElementById('cookie-accept-btn');
       const cookieEssentialBtn = document.getElementById('cookie-essential-btn');
+      const cookieCloseBtn = document.getElementById('cookie-close-btn');
       const cookieSettingsTrigger = document.getElementById('cookie-settings-trigger');
 
       function applyCookieConsent(choice) {
@@ -3180,6 +3227,9 @@
       }
       if (cookieEssentialBtn) {
         cookieEssentialBtn.addEventListener('click', () => applyCookieConsent('essential'));
+      }
+      if (cookieCloseBtn) {
+        cookieCloseBtn.addEventListener('click', () => applyCookieConsent('essential'));
       }
       if (cookieSettingsTrigger) {
         cookieSettingsTrigger.addEventListener('click', () => {
